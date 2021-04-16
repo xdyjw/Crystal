@@ -32,3 +32,54 @@
         - 方差
         - 最大值
         - 最小值
+
+- 缺失值分析
+```python
+    # 缺失数量统计
+    data.isnull().sum()
+```
+    - 缺失处理方法
+        - 如果很少就填充
+        - 如果很多可以考虑删除这个字段
+    - 填充方法
+        - 利用树模型进行填充
+        - 均值预估
+
+- 异常值分析
+```python
+    # 分析类别特征值的数量
+    data['field'].value_counts()
+```
+    - 判断方法
+        - 对于类别特征，如果严重倾斜，可以删掉
+        - 对于连续特征，可以进行分桶分析
+        
+- 预测值分析
+```python
+    # 拟合分布
+    import scipy.stats as st
+
+    plt.figure(1); plt.title('Johnson SU')
+    sns.distplot(y, kde=False, fit=st.johnsonsu) # 约翰逊分布
+
+    plt.figure(2); plt.title('Normal')
+    sns.distplot(y, kde=False, fit=st.norm) # 正态分布
+
+    plt.figure(3); plt.title('Log Normal') # 对数正态分布
+    sns.distplot(y, kde=False, fit=st.lognorm)
+
+    # 偏度峰度分析 https://www.cnblogs.com/wyy1480/p/10474046.html
+    sns.distplot(y);
+    print("Skewness: %f" % y.skew())
+    print("Kurtosis: %f" % y.kurt())
+
+    # 分桶分析
+    plt.hist(y, orientation = 'vertical', histtype = 'bar', color ='red')
+    plt.show()
+```
+    - 分析方法
+        - 拟合
+        - 偏度峰度分析
+        - 分桶分析
+
+    
